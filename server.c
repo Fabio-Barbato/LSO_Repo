@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <pthread.h>
+#include "JSON/dbusrctrl.h"
 #define PORT 8080
 #define SIZE_BUF 1024
 
@@ -20,6 +21,12 @@ int main(int argc, char const* argv[])
     int opt = 1;
     socklen_t addrlen = sizeof(address);
     pthread_t tid;
+
+        cJSON *json = create_sample_json();
+    if (write_json("output.json", json) != 0) {
+        printf("Failed to write JSON to file\n");
+    }
+    cJSON_Delete(json);
 
 
 
