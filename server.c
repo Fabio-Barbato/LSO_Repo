@@ -22,10 +22,7 @@ int main(int argc, char const* argv[])
     socklen_t addrlen = sizeof(address);
     pthread_t tid;
 
-    add_user("Mario3","Marietto3","MarMArIOIO3");
-
-
-
+add_user("Mario","Mario","MarMar","pa");
     // Creating socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("socket failed");
