@@ -22,11 +22,7 @@ int main(int argc, char const* argv[])
     socklen_t addrlen = sizeof(address);
     pthread_t tid;
 
-        cJSON *json = create_sample_json();
-    if (write_json("output.json", json) != 0) {
-        printf("Failed to write JSON to file\n");
-    }
-    cJSON_Delete(json);
+    add_user("Mario3","Marietto3","MarMArIOIO3");
 
 
 
