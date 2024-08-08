@@ -7,6 +7,7 @@
 #include <pthread.h>
 #include "Controller/usrctrl.h"
 #include "Controller/bkctrl.h"
+#include "Controller/loanctrl.h"
 #define PORT 8080
 #define SIZE_BUF 1024
 
@@ -23,7 +24,7 @@ int main(int argc, char const* argv[])
     socklen_t addrlen = sizeof(address);
     pthread_t tid;
 
-    loan("2",0);
+    delete_loan("Uly","1");
     
     // Creating socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
