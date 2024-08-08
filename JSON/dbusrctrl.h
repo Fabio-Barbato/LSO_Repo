@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include "dbusrctrl.h"
 #include "jsonparse.h"
-#define FILENAME "usersDB.json"
+#define USR "usersDB.json"
 
 cJSON* search_user(const char* username) { //use cJSON_Print(cJSON*) to print it
-    cJSON *json = read_json(FILENAME);
+    cJSON *json = read_json(USR);
     if (!json) {
         return NULL;
     }
@@ -31,7 +31,7 @@ cJSON* search_user(const char* username) { //use cJSON_Print(cJSON*) to print it
 }
 
 int add_user(const char* name, const char* surname, const char* username, const char* password) {
-    cJSON *json = read_json(FILENAME);
+    cJSON *json = read_json(USR);
     if (!json) {
         perror("No JSON file\n");
         return -1;
@@ -50,13 +50,13 @@ int add_user(const char* name, const char* surname, const char* username, const 
 
     cJSON_AddItemToArray(json, user);
 
-    int result = write_json(FILENAME, json);
+    int result = write_json(USR, json);
     cJSON_Delete(json);
     return result;
 }
 
 int delete_user(const char* username) {
-    cJSON *json = read_json(FILENAME);
+    cJSON *json = read_json(USR);
     if (!json) {
         return -1;
     }
@@ -69,7 +69,7 @@ int delete_user(const char* username) {
         cJSON *user_username = cJSON_GetObjectItem(user, "username");
         if (cJSON_IsString(user_username) && (strcmp(user_username->valuestring, username) == 0)) {
             cJSON_DeleteItemFromArray(users_array, index);
-            int result = write_json(FILENAME, json);
+            int result = write_json(USR, json);
             cJSON_Delete(json);
             return result;
         }
@@ -81,7 +81,7 @@ int delete_user(const char* username) {
 }
 
 int update_user(const char* username, const char* new_name, const char* new_surname, const char* new_username, const char* new_password) {
-    cJSON *json = read_json(FILENAME);
+    cJSON *json = read_json(USR);
     if (!json) {
         return -1;
     }
@@ -108,7 +108,7 @@ int update_user(const char* username, const char* new_name, const char* new_surn
                 cJSON_SetValuestring(password, new_password);
             }
 
-            int result = write_json(FILENAME, json);
+            int result = write_json(USR, json);
             cJSON_Delete(json);
             return result;
         }
@@ -119,7 +119,7 @@ int update_user(const char* username, const char* new_name, const char* new_surn
 }
 
 int login(const char* username,const char* password){
-    cJSON *json = read_json(FILENAME);
+    cJSON *json = read_json(USR);
     if (!json) {
         return -1;
     }

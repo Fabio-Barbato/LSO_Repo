@@ -1,0 +1,13 @@
+[{
+		"title":	"Il suggeritore",
+		"ISBN":	"9788850250929",
+		"author":	"Donato Carrisi",
+		"genre":	"Thriller",
+		"copies":	5
+	}, {
+		"title":	"Uno, nessuno e centomila",
+		"ISBN":	"9788806221966",
+		"author":	"Luigi Pirandello",
+		"genre":	"Classic",
+		"copies":	1
+	}]
