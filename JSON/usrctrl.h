@@ -1,10 +1,10 @@
-#ifndef dbusrctrl
-#define dbusrctrl
+#ifndef usrctrl
+#define usrctrl
 
 #include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "dbusrctrl.h"
+#include "usrctrl.h"
 #include "jsonparse.h"
 #define USR "usersDB.json"
 

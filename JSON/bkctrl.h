@@ -1,10 +1,10 @@
-#ifndef dbbkctrl
-#define dbbkctrl
+#ifndef bkctrl
+#define bkctrl
 
 #include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "dbbkctrl.h"
+#include "bkctrl.h"
 #include "jsonparse.h"
 #define BK "booksDB.json"
 
