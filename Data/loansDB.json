@@ -1,0 +1,11 @@
+[{
+        "username": "MarMar",
+        "isbn": "9788850250929",
+        "loan date": "12/03/2024",
+        "return date": "12/04/2024"
+    },{
+        "username": "MarMar",
+        "isbn": "9788806221966",
+        "loan date": "12/03/2024",
+        "return date": "12/04/2024"
+    }]

@@ -79,7 +79,7 @@ int delete_book(const char* isbn) {
 
     cJSON_Delete(json);
     return -1;
-}*/
+}
 
 int update_copies(const char* isbn, const int new_copies) {
     cJSON *json = read_json(BK);
@@ -106,10 +106,10 @@ int update_copies(const char* isbn, const int new_copies) {
 
     cJSON_Delete(json);
     return -1;
-}
+}*/
 
 
-int add_copies(const char* isbn, const int add) { //0 add, 1 remove a copy
+int loan(const char* isbn, const int add) { //0 add, else remove a copy
     cJSON *json = read_json(BK);
     if (!json) {
         return -1;
@@ -122,14 +122,30 @@ int add_copies(const char* isbn, const int add) { //0 add, 1 remove a copy
         cJSON *book_isbn = cJSON_GetObjectItem(book, "isbn");
         if (cJSON_IsString(book_isbn) && (strcmp(book_isbn->valuestring, isbn) == 0)) {
             cJSON *copies = cJSON_GetObjectItem(book, "copies");
+            cJSON *given_copies = cJSON_GetObjectItem(book, "given_copies");
             int new_copies = cJSON_GetNumberValue(copies);
+            int new_givcopies = cJSON_GetNumberValue(given_copies);
 
-            if(add==0)
-                new_copies++;
-            else
+            if(add==0){
+                new_givcopies = (new_givcopies==0) ? 0:new_givcopies-1;
+                // if(new_givcopies<0){
+                //     new_givcopies = 0;
+                // }
+                // else{
+                //     new_givcopies--;
+                // }
+                new_copies++;  
+            }
+            else{
+                if(new_copies==0){
+                    perror("No copies available");
+                    return -1;
+                }
                 new_copies--;
-
+                new_givcopies++;
+            }
             cJSON_SetIntValue(copies,new_copies);
+            cJSON_SetIntValue(given_copies,new_givcopies);
             int result = write_json(BK, json);
             cJSON_Delete(json);
             return result;

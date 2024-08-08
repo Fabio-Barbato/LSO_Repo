@@ -23,6 +23,7 @@ int main(int argc, char const* argv[])
     socklen_t addrlen = sizeof(address);
     pthread_t tid;
 
+    loan("2",0);
     
     // Creating socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
