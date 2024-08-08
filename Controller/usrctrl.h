@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "usrctrl.h"
 #include "jsonparse.h"
-#define USR "usersDB.json"
+#define USR "Data/usersDB.json"
 
 cJSON* search_user(const char* username) { //use cJSON_Print(cJSON*) to print it
     cJSON *json = read_json(USR);

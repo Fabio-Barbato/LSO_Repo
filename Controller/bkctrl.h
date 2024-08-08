@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "bkctrl.h"
 #include "jsonparse.h"
-#define BK "booksDB.json"
+#define BK "Data/booksDB.json"
 
 cJSON* search_book(const char* isbn) { //use cJSON_Print(cJSON*) to print it
     cJSON *json = read_json(BK);
