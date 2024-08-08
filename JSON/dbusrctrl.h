@@ -118,7 +118,27 @@ int update_user(const char* username, const char* new_name, const char* new_surn
     return -1;
 }
 
-// int login(const char* username,const char* password){
-//     if(search_user(username))
-// }
+int login(const char* username,const char* password){
+    cJSON *json = read_json(FILENAME);
+    if (!json) {
+        return -1;
+    }
+
+    cJSON *user = NULL;
+    cJSON *users_array = json;
+
+    cJSON_ArrayForEach(user, users_array) {
+        cJSON *user_username = cJSON_GetObjectItem(user, "username");
+        cJSON *user_passwd = cJSON_GetObjectItem(user, "password");
+        if (cJSON_IsString(user_username)){ 
+            if(strcmp(user_username->valuestring, username) == 0 && strcmp(user_passwd->valuestring, password)==0) {
+                cJSON_Delete(json);
+                return 0;
+            }
+        }
+    }
+    cJSON_Delete(json);
+    return -1;
+}
+
 #endif
