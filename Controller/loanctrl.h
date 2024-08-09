@@ -50,6 +50,7 @@ int add_loan(const char* username, const char* isbn) {
     cJSON_AddStringToObject(loan, "isbn", isbn);
     strftime(loan_date, 16, "%d-%m-%Y", &tm_info);
     cJSON_AddStringToObject(loan, "loan_date", loan_date);
+    
     tm_info.tm_mon += 1;
     mktime(&tm_info);
     strftime(return_date, 16, "%d-%m-%Y", &tm_info);

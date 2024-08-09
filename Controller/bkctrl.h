@@ -30,35 +30,6 @@ cJSON* search_book(const char* isbn) { //use cJSON_Print(cJSON*) to print it
     return NULL;
 }
 
-
-/*int update_copies(const char* isbn, const int new_copies) {
-    cJSON *json = read_json(BK);
-    if (!json) {
-        return -1;
-    }
-
-    cJSON *book = NULL;
-    cJSON *books_array = json;
-
-    cJSON_ArrayForEach(book, books_array) {
-        cJSON *book_isbn = cJSON_GetObjectItem(book, "isbn");
-        if (cJSON_IsString(book_isbn) && (strcmp(book_isbn->valuestring, isbn) == 0)) {
-            if (new_copies) {
-                cJSON *copies = cJSON_GetObjectItem(book, "copies");
-                cJSON_SetIntValue(copies,new_copies);
-            }
-
-            int result = write_json(BK, json);
-            cJSON_Delete(json);
-            return result;
-        }
-    }
-
-    cJSON_Delete(json);
-    return -1;
-}*/
-
-
 int loan(const char* isbn, const int add) { //0 add, else loan
     cJSON *json = read_json(BK);
     if (!json) {
@@ -98,6 +69,18 @@ int loan(const char* isbn, const int add) { //0 add, else loan
 
     cJSON_Delete(json);
     return -1;
+}
+
+int checkout(char *isbn[], int length){
+    int result = 0, i = 0;
+
+    while (i<length && result==0)
+    {
+        result = loan(isbn[i],1);
+        i++;
+    }
+
+    return result;
 }
 
 #endif
