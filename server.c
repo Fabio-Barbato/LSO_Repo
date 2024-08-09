@@ -9,8 +9,6 @@
 #define PORT 8080
 #define SIZE_BUF 1024
 
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
 void* handle_client(void* arg);
 
@@ -21,9 +19,8 @@ int main(int argc, char const* argv[])
     int opt = 1;
     socklen_t addrlen = sizeof(address);
     pthread_t tid;
-
-    delete_loan("Uly","1");
     
+        
     // Creating socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("socket failed");
@@ -83,19 +80,7 @@ void* handle_client(void* arg) {
     valread = read(new_socket, buffer, SIZE_BUF - 1);
     if (valread > 0) {
         printf("Received: %s\n", buffer);
-
-        //Command parsing
-        char command[SIZE_BUF] = {0};
-        sscanf(buffer, "%s", command);
-
-        
-        if (strcmp(command, "ADD_USER") == 0) {
-            pthread_mutex_lock(&mutex);
-            add_request(buffer,new_socket);
-            pthread_mutex_unlock(&mutex);
-        } else {
-            send(new_socket, "Unknown command", strlen("Unknown command"), 0);
-        }
+        command_parse(buffer,new_socket);
     }
 
     close(new_socket);

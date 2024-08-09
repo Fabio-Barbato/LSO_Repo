@@ -68,48 +68,4 @@ int write_json(const char* filename, cJSON* json) {
     return result;
 }
 
-void extract_and_print_data(cJSON* json) {
-    cJSON *name = cJSON_GetObjectItem(json, "name");
-    cJSON *age = cJSON_GetObjectItem(json, "age");
-    cJSON *is_student = cJSON_GetObjectItem(json, "is_student");
-    cJSON *scores = cJSON_GetObjectItem(json, "scores");
-
-    if (cJSON_IsString(name) && (name->valuestring != NULL)) {
-        printf("Name: %s\n", name->valuestring);
-    }
-
-    if (cJSON_IsNumber(age)) {
-        printf("Age: %d\n", age->valueint);
-    }
-
-    if (cJSON_IsBool(is_student)) {
-        printf("Is student: %s\n", cJSON_IsTrue(is_student) ? "true" : "false");
-    }
-
-    if (cJSON_IsArray(scores)) {
-        int score_count = cJSON_GetArraySize(scores);
-        printf("Scores: ");
-        for (int i = 0; i < score_count; i++) {
-            cJSON *score = cJSON_GetArrayItem(scores, i);
-            if (cJSON_IsNumber(score)) {
-                printf("%d ", score->valueint);
-            }
-        }
-        printf("\n");
-    }
-}
-
-cJSON* create_sample_json() {
-    cJSON *json = cJSON_CreateObject();
-
-    cJSON_AddStringToObject(json, "name", "John Doe");
-    cJSON_AddNumberToObject(json, "age", 30);
-    cJSON_AddBoolToObject(json, "is_student", 0);
-
-    cJSON *scores = cJSON_CreateIntArray((const int[]){95, 85, 76}, 3);
-    cJSON_AddItemToObject(json, "scores", scores);
-
-    return json;
-}
-
 #endif 
