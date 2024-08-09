@@ -9,28 +9,26 @@
 #include "jsonparse.h"
 #define LOAN "Data/loansDB.json"
 
-// cJSON* search_loan(const char* username, const char* isbn) { //use cJSON_Print(cJSON*) to print it, search loan by user and book
-//     cJSON *json = read_json(LOAN);
-//     if (!json) {
-//         return NULL;
-//     }
+int count_loans(const char* username) {
+    cJSON *json = read_json(LOAN);
+    if (!json) {
+        return -1;
+    }
 
-//     cJSON *loan = NULL;
-//     cJSON *users_array = json;
+    cJSON *loan = NULL;
+    cJSON *loans_array = json;
+    int counter=0;
 
-//     cJSON_ArrayForEach(user, users_array) {
-//         cJSON *user_username = cJSON_GetObjectItem(loan, "username");
-//         cJSON *book_isbn = cJSON_GetObjectItem(loan, "isbn");
-//         if ((strcmp(user_username->valuestring, username) == 0) && strcmp(book_isbn->valuestring, isbn) == 0) {
-//             cJSON *loan_copy = cJSON_Duplicate(loan, 1);
-//             cJSON_Delete(json);
-//             return loan_copy;
-//         }
-//     }
+    cJSON_ArrayForEach(loan, loans_array) {
+        cJSON *user_username = cJSON_GetObjectItem(loan, "username");
+        if ((strcmp(user_username->valuestring, username) == 0)) {
+            counter++;
+        }
+    }
 
-//     cJSON_Delete(json);
-//     return NULL;
-// }  return array of loans
+    cJSON_Delete(json);
+    return counter;
+}
 
 int add_loan(const char* username, const char* isbn) {
     time_t current_time;

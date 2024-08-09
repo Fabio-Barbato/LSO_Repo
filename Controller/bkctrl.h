@@ -59,7 +59,7 @@ cJSON* search_book(const char* isbn) { //use cJSON_Print(cJSON*) to print it
 }*/
 
 
-int loan(const char* isbn, const int add) { //0 add, else remove a copy
+int loan(const char* isbn, const int add) { //0 add, else loan
     cJSON *json = read_json(BK);
     if (!json) {
         return -1;

@@ -47,17 +47,21 @@ void login_request(char request[],int client_socket){
 void loan_request(char request[],int client_socket){
     
     char command[SIZE_BUF] = {0};
-    char username[SIZE_BUF] = {0}, password[SIZE_BUF] = {0};
-    sscanf(request, "%s %s %s", command, username, password);
+    char username[SIZE_BUF] = {0}, isbn[SIZE_BUF] = {0};
+    sscanf(request, "%s %s %s", command, username, isbn);
 
     pthread_mutex_lock(&reg_mutex);
-    int result = login(username,password);
+    int result = count_loans(username);
+    result = (result<5) ? loan(isbn,1) : -1;
+    result = (result==0) ? add_loan(username,isbn) : -2;
     pthread_mutex_unlock(&reg_mutex);
 
     if (result == 0) {
-        send(client_socket, "Successfully logged", strlen("Successfully logged"), 0);
+        send(client_socket, "Loan done", strlen("Loan done"), 0);
+    }  else if (result == -1) {
+        send(client_socket, "You have reached max number of loans", strlen("You have reached max number of loans"), 0);
     } else {
-        send(client_socket, "Failed login", strlen("Failed login"), 0);
+        send(client_socket, "No copy available", strlen("No copy available"), 0);
     }
 
 }

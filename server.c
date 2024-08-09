@@ -19,8 +19,7 @@ int main(int argc, char const* argv[])
     int opt = 1;
     socklen_t addrlen = sizeof(address);
     pthread_t tid;
-    
-        
+
     // Creating socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("socket failed");
