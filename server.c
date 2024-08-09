@@ -5,9 +5,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <pthread.h>
-#include "Controller/usrctrl.h"
-#include "Controller/bkctrl.h"
-#include "Controller/loanctrl.h"
+#include "serverop.h"
 #define PORT 8080
 #define SIZE_BUF 1024
 
@@ -81,17 +79,23 @@ void* handle_client(void* arg) {
     int new_socket = (intptr_t)arg;
     ssize_t valread;
     char buffer[SIZE_BUF] = {0};
-    char* hello = "Hello from server";
 
-    // Read data from the client
-    valread = read(new_socket, buffer, SIZE_BUF - 1); // subtract 1 for the null terminator at the end
+    valread = read(new_socket, buffer, SIZE_BUF - 1);
     if (valread > 0) {
-        printf("%s\n", buffer);
+        printf("Received: %s\n", buffer);
 
-        printf("Client socket: %d\n", new_socket);
-        sleep(5);
-        send(new_socket, hello, strlen(hello), 0);
-        printf("Hello message sent\n");
+        //Command parsing
+        char command[SIZE_BUF] = {0};
+        sscanf(buffer, "%s", command);
+
+        
+        if (strcmp(command, "ADD_USER") == 0) {
+            pthread_mutex_lock(&mutex);
+            add_request(buffer,new_socket);
+            pthread_mutex_unlock(&mutex);
+        } else {
+            send(new_socket, "Unknown command", strlen("Unknown command"), 0);
+        }
     }
 
     close(new_socket);

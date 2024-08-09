@@ -13,7 +13,11 @@ int main(int argc, char const* argv[])
     int status, client_fd;
     struct sockaddr_in serv_addr;
     char* hello = "Hello from client";
+    char user_data[SIZE_BUF] = { 0 };
     char buffer[SIZE_BUF] = { 0 };
+
+    snprintf(user_data, SIZE_BUF, "ADD_USER %s %s %s %s", "Fabio", "Barbato", "Raziel", "password");
+
     
     if ((client_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         printf("\n Socket creation error \n");
@@ -33,8 +37,9 @@ int main(int argc, char const* argv[])
         printf("\nConnection Failed \n");
         exit(EXIT_FAILURE);
     }
-    send(client_fd, hello, strlen(hello), 0);
-    printf("Hello message sent\n");
+    send(client_fd, user_data, strlen(user_data), 0);
+    printf("User data sent\n");
+    read(client_fd, buffer, SIZE_BUF);
     printf("%s\n", buffer);
 
     close(client_fd);
