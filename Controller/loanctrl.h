@@ -1,13 +1,12 @@
 #ifndef loanctrl
 #define loanctrl
 
-#include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include "loanctrl.h"
 #include "jsonparse.h"
-#define LOAN "Data/loansDB.json"
+#define LOAN "Data/loans.json"
 #define SIZE_BUF_MIN 16
 #define DAYS_TO_RET 14
 

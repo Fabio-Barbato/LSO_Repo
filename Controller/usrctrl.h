@@ -1,12 +1,11 @@
 #ifndef usrctrl
 #define usrctrl
 
-#include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "usrctrl.h"
 #include "jsonparse.h"
-#define USR "Data/usersDB.json"
+#define USR "Data/users.json"
 
 cJSON* search_user(const char* username) { //use cJSON_Print(cJSON*) to print it
     cJSON *json = read_json(USR);
