@@ -33,7 +33,7 @@ cJSON* search_user(const char* username) { //use cJSON_Print(cJSON*) to print it
 int add_user(const char* name, const char* surname, const char* username, const char* password) {
     cJSON *json = read_json(USR);
     if (!json) {
-        perror("No JSON file\n");
+        printf("No JSON file\n");
         return -1;
     }
 

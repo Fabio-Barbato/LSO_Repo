@@ -8,6 +8,8 @@
 #include "loanctrl.h"
 #include "jsonparse.h"
 #define LOAN "Data/loansDB.json"
+#define SIZE_BUF_MIN 16
+#define DAYS_TO_RET 14
 
 int count_loans(const char* username) {
     cJSON *json = read_json(LOAN);
@@ -33,8 +35,8 @@ int count_loans(const char* username) {
 int add_loan(const char* username, const char* isbn) {
     time_t current_time;
     struct tm tm_info;
-    char loan_date[16];
-    char return_date[16];
+    char loan_date[SIZE_BUF_MIN];
+    char return_date[SIZE_BUF_MIN];
 
     cJSON *json = read_json(LOAN);
     if (!json) {
@@ -48,12 +50,12 @@ int add_loan(const char* username, const char* isbn) {
     cJSON *loan = cJSON_CreateObject();
     cJSON_AddStringToObject(loan, "username", username);
     cJSON_AddStringToObject(loan, "isbn", isbn);
-    strftime(loan_date, 16, "%d-%m-%Y", &tm_info);
+    strftime(loan_date, SIZE_BUF_MIN, "%d-%m-%Y", &tm_info);
     cJSON_AddStringToObject(loan, "loan_date", loan_date);
-    
-    tm_info.tm_mon += 1;
+
+    tm_info.tm_mday += DAYS_TO_RET;
     mktime(&tm_info);
-    strftime(return_date, 16, "%d-%m-%Y", &tm_info);
+    strftime(return_date, SIZE_BUF_MIN, "%d-%m-%Y", &tm_info);
     cJSON_AddStringToObject(loan, "return_date", return_date);
 
     cJSON_AddItemToArray(json, loan);

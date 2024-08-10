@@ -3,13 +3,13 @@
 		"ISBN":	"1",
 		"author":	"Donato Carrisi",
 		"genre":	"Thriller",
-		"copies":	3,
-		"given_copies":	6
+		"copies":	0,
+		"given_copies":	9
 	}, {
 		"title":	"Uno, nessuno e centomila",
 		"ISBN":	"2",
 		"author":	"Luigi Pirandello",
 		"genre":	"Classic",
-		"copies":	1,
-		"given_copies":	9
+		"copies":	7,
+		"given_copies":	11
 	}]

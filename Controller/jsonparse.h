@@ -9,7 +9,7 @@
 char* read_file(const char* filename) {
     FILE *file = fopen(filename, "r");
     if (!file) {
-        perror("Could not open file");
+        printf("Could not open file\n");
         return NULL;
     }
 
@@ -30,7 +30,7 @@ char* read_file(const char* filename) {
 int write_file(const char* filename, const char* data) {
     FILE *file = fopen(filename, "w");
     if (!file) {
-        perror("Could not open file for writing");
+        printf("Could not open file for writing\n");
         return -1;
     }
 
@@ -59,7 +59,7 @@ cJSON* read_json(const char* filename) {
 int write_json(const char* filename, cJSON* json) {
     char *json_string = cJSON_Print(json);
     if (!json_string) {
-        perror("Failed to print JSON");
+        printf("Failed to print JSON\n");
         return -1;
     }
 

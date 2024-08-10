@@ -20,6 +20,7 @@ int main(int argc, char const* argv[])
     socklen_t addrlen = sizeof(address);
     pthread_t tid;
 
+    printf("Creating socket file descriptor...\n");
     // Creating socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("socket failed");
@@ -36,17 +37,20 @@ int main(int argc, char const* argv[])
         exit(EXIT_FAILURE);
     }
 
+    printf("Defining address...\n");
 // DEFINE ADDRESS
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(PORT);
 
+    printf("Binding...\n");
 //  BIND
     if (bind(server_fd, (struct sockaddr*)&address,sizeof(address))< 0) {
         perror("bind failed");
         exit(EXIT_FAILURE);
     }
 
+    printf("Listening...\n");
 // LISTEN
     if (listen(server_fd, 3) < 0) {
         perror("listen");
@@ -78,7 +82,7 @@ void* handle_client(void* arg) {
 
     valread = read(new_socket, buffer, SIZE_BUF - 1);
     if (valread > 0) {
-        printf("Received: %s\n", buffer);
+        printf("Command received: %s\n", buffer);
         command_parse(buffer,new_socket);
     }
 

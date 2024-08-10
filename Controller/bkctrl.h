@@ -53,7 +53,7 @@ int loan(const char* isbn, const int add) { //0 add, else loan
             }
             else{ //loan
                 if(new_copies==0){
-                    perror("No copies available");
+                    printf("No copies available of the book %s\n",isbn);
                     return -1;
                 }
                 new_copies--;
