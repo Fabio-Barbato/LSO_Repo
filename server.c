@@ -57,6 +57,8 @@ int main(int argc, char const* argv[])
         exit(EXIT_FAILURE);
     }
 
+    check_overdue_loans();
+
 while(1){
 //ACCEPT
     if ((new_socket = accept(server_fd, (struct sockaddr*)&address,&addrlen))< 0) {
@@ -68,6 +70,7 @@ while(1){
         perror("pthread_create");
         exit(EXIT_FAILURE);
     }
+
     pthread_detach(tid);
 
 }

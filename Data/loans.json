@@ -1,14 +1,4 @@
 [{
-		"username":	"MarMar",
-		"isbn":	"9788850250929",
-		"loan date":	"12-03-2024",
-		"return date":	"12-04-2024"
-	}, {
-		"username":	"MarMar",
-		"isbn":	"9788806221966",
-		"loan date":	"12-03-2024",
-		"return date":	"12-04-2024"
-	}, {
 		"username":	"Raziel",
 		"isbn":	"1",
 		"loan_date":	"10-08-2024",
@@ -21,8 +11,8 @@
 	}, {
 		"username":	"Raziel",
 		"isbn":	"1",
-		"loan_date":	"10-08-2024",
-		"return_date":	"24-08-2024"
+		"loan_date":	"08-08-2024",
+		"return_date":	"09-08-2024"
 	}, {
 		"username":	"Raziel",
 		"isbn":	"2",

@@ -4,13 +4,13 @@
 #include "Controller/usrctrl.h"
 #include "Controller/bkctrl.h"
 #include "Controller/loanctrl.h"
+#include "Controller/notctrl.h"
 #include "serverop.h"
 #define SIZE_BUF 1024
 #define MAX_LOAN 5 //Loan's max number
 
 pthread_mutex_t reg_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t loan_mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
 void add_request(char request[],int client_socket){
     
@@ -30,20 +30,29 @@ void add_request(char request[],int client_socket){
 
 }
 
-void login_request(char request[],int client_socket){
-    
+char* login_request(char request[], int client_socket) {
     char command[SIZE_BUF] = {0};
-    char username[SIZE_BUF] = {0}, password[SIZE_BUF] = {0};
+    char password[SIZE_BUF] = {0};
+    char username[SIZE_BUF] = {0};
     sscanf(request, "%s %s %s", command, username, password);
 
-    int result = login(username,password);
+    int result = login(username, password);
 
     if (result == 0) {
+        // Allocate memory for the returned username
+        char *username_copy = malloc(strlen(username) + 1);
+        if (username_copy == NULL) {
+            perror("Failed to allocate memory");
+            return NULL;
+        }
+        strcpy(username_copy, username);
+
         send(client_socket, "Successfully logged", strlen("Successfully logged"), 0);
+        return username_copy;
     } else {
         send(client_socket, "Failed login", strlen("Failed login"), 0);
+        return NULL;
     }
-
 }
 
 void loan_request(char request[], int client_socket) {
@@ -91,18 +100,22 @@ void loan_request(char request[], int client_socket) {
     }
 }
 
-void command_parse(char request[],int client_socket){
+
+void command_parse(char request[], int client_socket) {
     char command[SIZE_BUF] = {0};
     sscanf(request, "%s", command);
 
-    if(strcmp(command,"ADD_USER")==0){
+    if (strcmp(command, "ADD_USER") == 0) {
         add_request(request, client_socket);
-    }else if(strcmp(command,"LOGIN")==0){
-        login_request(request,client_socket);
-    }else if(strcmp(command,"LOAN")==0){
-        loan_request(request,client_socket);
-    }
-    else{
+    } else if (strcmp(command, "LOGIN") == 0) {
+        char *username = login_request(request, client_socket);
+        if (username) {
+            notify_user(username, client_socket);
+            free(username); // Deallocate the memory allocated for the username
+        }
+    } else if (strcmp(command, "LOAN") == 0) {
+        loan_request(request, client_socket);
+    } else {
         send(client_socket, "Unknown command", strlen("Unknown command"), 0);
     }
 }
