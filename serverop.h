@@ -75,7 +75,7 @@ void loan_request(char request[], int client_socket) {
 
     int result = count_loans(username);  // check user's loans
 
-    if (result < MAX_LOAN) {  // check if loan is possible
+    if (result < MAX_LOAN && result+isbn_count<MAX_LOAN) {  // check if loan is possible
         result = checkout(isbn_array, isbn_count);
 
         if (result == 0) {
@@ -110,6 +110,7 @@ void command_parse(char request[], int client_socket) {
     } else if (strcmp(command, "LOGIN") == 0) {
         char *username = login_request(request, client_socket);
         if (username) {
+            printf("Notifying user %s\n",username);
             notify_user(username, client_socket);
             free(username); // Deallocate the memory allocated for the username
         }

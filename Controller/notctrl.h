@@ -52,6 +52,7 @@ int notify_user(const char* username, int client_socket) {
 
     cJSON_ArrayForEach(notification, notifications_array) {
         cJSON *user_username = cJSON_GetObjectItem(notification, "username");
+        printf("Checking %s\n",username);
         if ((strcmp(user_username->valuestring, username) == 0)) {
             printf("Sending notification to %s...\n",username);
             cJSON *message = cJSON_GetObjectItem(notification, "message");
@@ -63,7 +64,7 @@ int notify_user(const char* username, int client_socket) {
     return 0;
 }
 
-int search_notification(const char* username) {
+int search_notification(const char* username, const char* isbn) {
     cJSON *json = read_json(NOTIF_FILE);
     if (!json) {
         printf("Can't read file json file for notifications\n");
@@ -75,12 +76,17 @@ int search_notification(const char* username) {
 
     cJSON_ArrayForEach(notification, notifications_array) {
         cJSON *user_username = cJSON_GetObjectItem(notification, "username");
-        if ((strcmp(user_username->valuestring, username) == 0)) {
+        cJSON *book_isbn = cJSON_GetObjectItem(notification, "isbn");
+        if (user_username && book_isbn && 
+            (strcmp(user_username->valuestring, username) == 0) && 
+            (strcmp(book_isbn->valuestring, isbn) == 0)) {
+            printf("Notification already exists for user %s and ISBN %s\n", username, isbn);
             cJSON_Delete(json);
             return 1;
         }
     }
 
+    printf("No notifications for user %s and ISBN %s\n", username, isbn);
     cJSON_Delete(json);
     return 0;
 }
@@ -100,14 +106,18 @@ int check_overdue_loans() {
         cJSON* return_date = cJSON_GetObjectItem(loan, "return_date");
         cJSON* username = cJSON_GetObjectItem(loan, "username");
         cJSON* isbn = cJSON_GetObjectItem(loan, "isbn");
+        
+        if (!return_date || !username || !isbn) {
+            printf("Error: Missing data in loan record\n");
+            continue;
+        }
+
         time_t due_time = parse_date(return_date->valuestring);
-        int result = search_notification(username->valuestring);
         if (now > due_time) {
-            if(result==0){
-            printf("Saving notification for %s late to return the book with ISBN %s...\n", username->valuestring,isbn->valuestring);
-            save_notification(username->valuestring, isbn->valuestring);
-            }else{
-                return result;
+            int result = search_notification(username->valuestring, isbn->valuestring);
+            if(result == 0) {
+                printf("Saving notification for %s late to return the book with ISBN %s...\n", username->valuestring, isbn->valuestring);
+                save_notification(username->valuestring, isbn->valuestring);
             }
         }
     }
@@ -117,7 +127,7 @@ int check_overdue_loans() {
     return 0;
 }
 
-void overdue_check_thread() {
+void* overdue_check(void* arg) {
     int result;
     while (1) {
         printf("Checking overdue loans...\n");
@@ -126,4 +136,6 @@ void overdue_check_thread() {
              printf("Error notifications...\n");
         sleep(CHECK_INTERVAL);
     }
+
+    return NULL;
 }

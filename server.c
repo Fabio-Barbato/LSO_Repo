@@ -19,6 +19,7 @@ int main(int argc, char const* argv[])
     int opt = 1;
     socklen_t addrlen = sizeof(address);
     pthread_t tid;
+    pthread_t tid_notify;
 
     printf("Creating socket file descriptor...\n");
     // Creating socket file descriptor
@@ -57,7 +58,10 @@ int main(int argc, char const* argv[])
         exit(EXIT_FAILURE);
     }
 
-    check_overdue_loans();
+    if (pthread_create(&tid_notify, NULL, overdue_check, (void*)(intptr_t)new_socket) != 0) {
+        perror("pthread_create");
+        exit(EXIT_FAILURE);
+    }
 
 while(1){
 //ACCEPT

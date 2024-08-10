@@ -37,7 +37,7 @@ int add_user(const char* name, const char* surname, const char* username, const 
     }
 
     if(search_user(username)){
-        perror("User already exists!\n");
+        printf("User already exists!\n");
         return -1;
     }
 

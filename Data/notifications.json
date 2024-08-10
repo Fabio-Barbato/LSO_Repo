@@ -1,5 +1,9 @@
 [{
 		"username":	"Raziel",
 		"isbn":	"1",
-		"message":	"Dear Raziel, the loan period has expire. You must return the book with ISBN 1."
+		"message":	"Dear Raziel, the loan period has expired. You must return the book with ISBN 1."
+	}, {
+		"username":	"Raziel2",
+		"isbn":	"2",
+		"message":	"Dear Raziel2, the loan period has expired. You must return the book with ISBN 2."
 	}]

@@ -13,4 +13,9 @@
 		"surname":	"Barbato",
 		"username":	"Raziel",
 		"password":	"password"
+	}, {
+		"name":	"Marco",
+		"surname":	"Antonio",
+		"username":	"Raziel2",
+		"password":	"new_passwd"
 	}]

@@ -13,9 +13,9 @@
 		"isbn":	"1",
 		"loan_date":	"08-08-2024",
 		"return_date":	"09-08-2024"
-	}, {
-		"username":	"Raziel",
+	},{
+		"username":	"Raziel2",
 		"isbn":	"2",
-		"loan_date":	"10-08-2024",
-		"return_date":	"24-08-2024"
+		"loan_date":	"08-08-2024",
+		"return_date":	"09-08-2024"
 	}]
