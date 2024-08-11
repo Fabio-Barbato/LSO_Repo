@@ -107,10 +107,10 @@ int check_overdue_loans() {
         cJSON* username = cJSON_GetObjectItem(loan, "username");
         cJSON* isbn = cJSON_GetObjectItem(loan, "isbn");
         
-        if (!return_date || !username || !isbn) {
-            printf("Error: Missing data in loan record\n");
-            continue;
-        }
+        // if (!return_date || !username || !isbn) {
+        //     printf("Error: Missing data in loan record\n");
+        //     continue;
+        // }
 
         time_t due_time = parse_date(return_date->valuestring);
         if (now > due_time) {
