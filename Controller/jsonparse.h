@@ -68,4 +68,29 @@ int write_json(const char* filename, cJSON* json) {
     return result;
 }
 
+char* jsonToString(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("Unable to open file");
+        return NULL;
+    }
+
+    fseek(file, 0, SEEK_END);
+    long file_size = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
+    char *buffer = (char *)malloc(file_size + 1);
+    if (buffer == NULL) {
+        perror("Unable to allocate buffer");
+        fclose(file);
+        return NULL;
+    }
+
+    fread(buffer, 1, file_size, file);
+    buffer[file_size] = '\0';
+
+    fclose(file);
+    return buffer;
+}
+
 #endif 

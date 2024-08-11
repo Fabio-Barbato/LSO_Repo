@@ -29,6 +29,19 @@ cJSON* search_book(const char* isbn) { //use cJSON_Print(cJSON*) to print it
     return NULL;
 }
 
+void send_books(int client_socket) {
+    char *json_data = jsonToString(BK);
+    if (json_data == NULL) {
+        const char *error_message = "Failed to read JSON file";
+        send(client_socket, error_message, strlen(error_message), 0);
+        return;
+    }
+
+    send(client_socket, json_data, strlen(json_data), 0);
+
+    free(json_data);
+}
+
 int loan(const char* isbn, const int add) { //0 add, else loan
     cJSON *json = read_json(BK);
     if (!json) {
