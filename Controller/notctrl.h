@@ -80,7 +80,7 @@ int search_notification(const char* username, const char* isbn) {
         if (user_username && book_isbn && 
             (strcmp(user_username->valuestring, username) == 0) && 
             (strcmp(book_isbn->valuestring, isbn) == 0)) {
-            printf("Notification already exists for user %s and ISBN %s\n", username, isbn);
+            //printf("Notification already exists for user %s and ISBN %s\n", username, isbn);
             cJSON_Delete(json);
             return 1;
         }

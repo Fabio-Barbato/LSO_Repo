@@ -110,7 +110,7 @@ void command_parse(char request[], int client_socket) {
     } else if (strcmp(command, "LOGIN") == 0) {
         char *username = login_request(request, client_socket);
         if (username) {
-            printf("Notifying user %s\n",username);
+            //printf("Notifying user %s\n",username);
             notify_user(username, client_socket);
             free(username); // Deallocate the memory allocated for the username
         }

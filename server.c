@@ -87,10 +87,19 @@ void* handle_client(void* arg) {
     ssize_t valread;
     char buffer[SIZE_BUF] = {0};
 
-    valread = read(new_socket, buffer, SIZE_BUF - 1);
-    if (valread > 0) {
+    while ((valread = read(new_socket, buffer, SIZE_BUF - 1)) > 0) {
+        buffer[valread] = '\0';
         printf("Command received: %s\n", buffer);
-        command_parse(buffer,new_socket);
+        command_parse(buffer, new_socket);
+
+        // Clean buffer
+        memset(buffer, 0, SIZE_BUF);
+    }
+
+    if (valread == 0) {
+        printf("Client disconnected.\n");
+    } else if (valread < 0) {
+        perror("read");
     }
 
     close(new_socket);

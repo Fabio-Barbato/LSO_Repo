@@ -18,4 +18,9 @@
 		"surname":	"Antonio",
 		"username":	"Raziel2",
 		"password":	"new_passwd"
+	}, {
+		"name":	"Mario",
+		"surname":	"Rossi",
+		"username":	"MarioRossi",
+		"password":	"RossiRossi"
 	}]
