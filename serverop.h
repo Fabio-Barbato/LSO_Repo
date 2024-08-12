@@ -112,10 +112,11 @@ void command_parse(char request[], int client_socket) {
         if (username) {
             notify_user(username, client_socket);
             free(username); // Deallocate the memory allocated for the username
-            send_books(client_socket);
         }
     } else if (strcmp(command, "LOAN") == 0) {
         loan_request(request, client_socket);
+    } else if (strcmp(command, "GET_BOOKS") == 0) {
+            send_books(client_socket);
     } else {
         send(client_socket, "Unknown command", strlen("Unknown command"), 0);
     }

@@ -23,4 +23,9 @@
 		"surname":	"Rossi",
 		"username":	"MarioRossi",
 		"password":	"RossiRossi"
+	}, {
+		"name":	"Santa",
+		"surname":	"Claus",
+		"username":	"Nicolas",
+		"password":	"Natale"
 	}]
