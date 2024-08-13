@@ -28,4 +28,19 @@
 		"surname":	"Claus",
 		"username":	"Nicolas",
 		"password":	"Natale"
+	}, {
+		"name":	"Fabio",
+		"surname":	"Barbato",
+		"username":	"Username",
+		"password":	"password"
+	}, {
+		"name":	"Name",
+		"surname":	"Surname",
+		"username":	"Username2",
+		"password":	"Password"
+	}, {
+		"name":	"fabio",
+		"surname":	"barbato",
+		"username":	"Username3",
+		"password":	"password"
 	}]

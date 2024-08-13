@@ -25,7 +25,7 @@ void add_request(char request[],int client_socket){
     if (result == 0) {
         send(client_socket, "User added successfully", strlen("User added successfully"), 0);
     } else {
-        send(client_socket, "Failed to add user", strlen("Failed to add user"), 0);
+        send(client_socket, "Username already exists", strlen("Username already exists"), 0);
     }
 
 }

@@ -36,7 +36,7 @@ void send_books(int client_socket) {
         send(client_socket, error_message, strlen(error_message), 0);
         return;
     }
-
+    printf("Sending %s\n",json_data);
     send(client_socket, json_data, strlen(json_data), 0);
 
     free(json_data);

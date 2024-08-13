@@ -4,12 +4,70 @@
 		"author":	"Donato Carrisi",
 		"genre":	"Thriller",
 		"copies":	0,
-		"given_copies":	9
+		"given_copies":	9,
+		"cover": "https://www.ibs.it/images/9788830426443_0_536_0_75.jpg"
 	}, {
 		"title":	"Uno, nessuno e centomila",
 		"ISBN":	"2",
 		"author":	"Luigi Pirandello",
 		"genre":	"Classic",
 		"copies":	16,
-		"given_copies":	30
+		"given_copies":	30,
+		"cover":"https://www.lafeltrinelli.it/images/9788844034054_0_536_0_75.jpg"
+	},{
+		"title":	"1984",
+		"ISBN":	"3",
+		"author":	"George Orwell",
+		"genre":	"Classic",
+		"copies":	5,
+		"given_copies":	0,
+		"cover": "https://www.ibs.it/images/9788804668237_0_536_0_75.jpg"
+	},{
+		"title":	"Il giocatore",
+		"ISBN":	"4",
+		"author":	"Fedor Dostoevskij",
+		"genre":	"Classic",
+		"copies":	10,
+		"given_copies":	0,
+		"cover": "https://www.einaudi.it/content/uploads/2015/02/978885841820GRA.JPG"
+	},{
+		"title":	"Altered Carbon",
+		"ISBN":	"5",
+		"author":	"Richard Morgan",
+		"genre":	"Sci-fi",
+		"copies":	17,
+		"given_copies":	0,
+		"cover": "https://www.ibs.it/images/9788850246731_0_536_0_75.jpg"
+	},{
+		"title":	"Il problema dei tre corpi",
+		"ISBN":	"6",
+		"author":	"Liu Cixin",
+		"genre":	"Sci-fi",
+		"copies":	0,
+		"given_copies":	0,
+		"cover": "https://www.ibs.it/images/9788804680604_0_0_536_0_75.jpg"
+	},{
+		"title":	"Il maestro e Margherita",
+		"ISBN":	"7",
+		"author":	"Michail Bulgakov",
+		"genre":	"Classic",
+		"copies":	20,
+		"given_copies":	0,
+		"cover": "https://www.ibs.it/images/9788893812672_0_536_0_75.jpg"
+	},{
+		"title":	"La terapia",
+		"ISBN":	"8",
+		"author":	"Sebastian Fitzek",
+		"genre":	"Thriller",
+		"copies":	10,
+		"given_copies":	0,
+		"cover": "https://www.ibs.it/images/9788861928091_0_536_0_75.jpg"
+	},{
+		"title":	"Guerra e pace",
+		"ISBN":	"9",
+		"author":	"Lev Tolstoj",
+		"genre":	"Classic",
+		"copies":	30,
+		"given_copies":	0,
+		"cover": "https://www.ibs.it/images/9788811131434_0_536_0_75.jpg"
 	}]
