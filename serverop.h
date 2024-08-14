@@ -100,6 +100,30 @@ void loan_request(char request[], int client_socket) {
     }
 }
 
+void send_book(char request[], int client_socket){
+    char command[SIZE_BUF] = {0};
+    char isbn[SIZE_BUF] = {0};
+
+    sscanf(request, "%s %s", command, isbn);
+
+    char* book = cJSON_Print(search_book(isbn));
+    printf("Sending %s\n",book);
+    send(client_socket, book, strlen(book), 0);
+}
+
+void send_books(int client_socket) {
+    char *json_data = jsonToString(BK);
+    if (json_data == NULL) {
+        const char *error_message = "Failed to read JSON file";
+        send(client_socket, error_message, strlen(error_message), 0);
+        return;
+    }
+    printf("Sending %s\n",json_data);
+    send(client_socket, json_data, strlen(json_data), 0);
+
+    free(json_data);
+}
+
 
 void command_parse(char request[], int client_socket) {
     char command[SIZE_BUF] = {0};
@@ -117,6 +141,8 @@ void command_parse(char request[], int client_socket) {
         loan_request(request, client_socket);
     } else if (strcmp(command, "GET_BOOKS") == 0) {
             send_books(client_socket);
+    } else if (strcmp(command, "GET_BOOK") == 0) {
+            send_book(request, client_socket);
     } else {
         send(client_socket, "Unknown command", strlen("Unknown command"), 0);
     }

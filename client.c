@@ -16,7 +16,7 @@ int main(int argc, char const* argv[])
     char user_data[SIZE_BUF] = { 0 };
     char buffer[SIZE_BUF] = { 0 };
 
-    snprintf(user_data, SIZE_BUF, "ADD_USER %s %s %s %s", "Fabio", "Barbato", "Raziel", "password");
+    snprintf(user_data, SIZE_BUF, "LOAN %s %s", "Raziel", "9791280639028");
 
     
     if ((client_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
