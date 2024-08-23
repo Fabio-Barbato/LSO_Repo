@@ -60,6 +60,7 @@ int main(int argc, char const* argv[])
         exit(EXIT_FAILURE);
     }
 
+//NOTIFY
     if (pthread_create(&tid_notify, NULL, overdue_check, (void*)(intptr_t)new_socket) != 0) {
         perror("pthread_create");
         exit(EXIT_FAILURE);

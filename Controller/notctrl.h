@@ -25,12 +25,13 @@ int save_notification(const char* username, const char* isbn) {
     }
 
     cJSON* notification = cJSON_CreateObject();
-     char message[SIZE_BUF];
-     snprintf(message, SIZE_BUF, "Dear %s, the loan period has expired. You must return the book with ISBN %s.", username, isbn);
+    char message[SIZE_BUF];
+    snprintf(message, SIZE_BUF, "Dear %s, the loan period has expired. You must return the book with ISBN %s.\n", username, isbn);
 
     cJSON_AddStringToObject(notification, "username", username);
     cJSON_AddStringToObject(notification, "isbn", isbn);
     cJSON_AddStringToObject(notification, "message", message);
+    cJSON_AddBoolToObject(notification, "notified", 0);
 
     cJSON_AddItemToArray(notifications, notification);
 
@@ -52,16 +53,39 @@ int notify_user(const char* username, int client_socket) {
 
     cJSON_ArrayForEach(notification, notifications_array) {
         cJSON *user_username = cJSON_GetObjectItem(notification, "username");
-        printf("Checking %s\n",username);
-        if ((strcmp(user_username->valuestring, username) == 0)) {
-            printf("Sending notification to %s...\n",username);
+        cJSON *notified = cJSON_GetObjectItem(notification, "notified");
+
+        if ((strcmp(user_username->valuestring, username) == 0) && !cJSON_IsTrue(notified)) {
+            printf("Sending notification to %s...\n", username);
             cJSON *message = cJSON_GetObjectItem(notification, "message");
             send(client_socket, message->valuestring, strlen(message->valuestring), 0);
+
+            cJSON_ReplaceItemInObject(notification, "notified", cJSON_CreateBool(1));
         }
     }
 
+    write_json(NOTIF_FILE, json);
     cJSON_Delete(json);
     return 0;
+}
+
+void reset_notifications() {
+    cJSON *json = read_json(NOTIF_FILE);
+    if (!json) {
+        printf("Can't read file json file for notifications\n");
+        return;
+    }
+
+    cJSON *notification = NULL;
+    cJSON *notifications_array = json;
+
+    printf("Resetting notifications...\n");
+    cJSON_ArrayForEach(notification, notifications_array) {
+        cJSON_ReplaceItemInObject(notification, "notified", cJSON_CreateBool(0));
+    }
+
+    write_json(NOTIF_FILE, json);
+    cJSON_Delete(json);
 }
 
 int search_notification(const char* username, const char* isbn) {
@@ -80,13 +104,13 @@ int search_notification(const char* username, const char* isbn) {
         if (user_username && book_isbn && 
             (strcmp(user_username->valuestring, username) == 0) && 
             (strcmp(book_isbn->valuestring, isbn) == 0)) {
-            //printf("Notification already exists for user %s and ISBN %s\n", username, isbn);
+            printf("Notification already exists for user %s and ISBN %s\n", username, isbn);
             cJSON_Delete(json);
             return 1;
         }
     }
 
-    printf("No notifications for user %s and ISBN %s\n", username, isbn);
+    printf("No notifications for user %s and ISBN %s. Saving...\n", username, isbn);
     cJSON_Delete(json);
     return 0;
 }
@@ -129,6 +153,7 @@ int check_overdue_loans() {
 
 void* overdue_check(void* arg) {
     int result;
+    reset_notifications();
     while (1) {
         printf("Checking overdue loans...\n");
         result = check_overdue_loans();
