@@ -74,8 +74,9 @@ void loan_request(char request[], int client_socket) {
     pthread_mutex_lock(&reg_mutex);
 
     int result = count_loans(username);  // Check user's loans
-    if (isbn_count < MAX_LOAN) {
-        if (result < MAX_LOAN && result + isbn_count < MAX_LOAN) {  // Check if the loan is possible
+    int count = result;
+    if (isbn_count <= MAX_LOAN) {
+        if (result <= MAX_LOAN && result + isbn_count <= MAX_LOAN) {  // Check if the loan is possible
             result = checkout(isbn_array, isbn_count);
 
             if (result == 0) {
@@ -98,20 +99,20 @@ void loan_request(char request[], int client_socket) {
 
     pthread_mutex_unlock(&reg_mutex);
 
+    char message[SIZE_BUF];
     if (result == 0) {
-        send(client_socket, "Loan confirmed", strlen("Loan confirmed"), 0);
+        snprintf(message, SIZE_BUF, "Loan confirmed");
     } else if (result == -1) {
-        send(client_socket, "You have reached max number of loans", strlen("You have reached max number of loans"), 0);
+        snprintf(message, SIZE_BUF, "You have already made %d loans", MAX_LOAN);
     } else if (result == -2) {
-        char error_message[SIZE_BUF];
-        snprintf(error_message, SIZE_BUF, "No more copies available for the book: %s", unavailable_book_title);
-        send(client_socket, error_message, strlen(error_message), 0);
+        snprintf(message, SIZE_BUF, "No more copies available for the book: %s", unavailable_book_title);
     } else if (result == -3) {
-        send(client_socket, "You have already borrowed books, request less", strlen("You have already borrowed books, request less"), 0);
+        snprintf(message, SIZE_BUF, "You have already made %d loans, you can only apply for %d more", count, MAX_LOAN-count);
     } else if (result == -4) {
-        send(client_socket, "Request less books", strlen("Request less books"), 0);
+        snprintf(message, SIZE_BUF, "Request less than %d books", MAX_LOAN);
     }
 
+    send(client_socket, message, strlen(message), 0);
     unavailable_book_title[0] = '\0';
 }
 

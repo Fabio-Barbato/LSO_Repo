@@ -15,12 +15,27 @@
 		"return_date":	"09-08-2024"
 	}, {
 		"username":	"Raziel",
-		"isbn":	"9788852084089",
+		"isbn":	"9788726842395",
 		"loan_date":	"23-08-2024",
 		"return_date":	"06-09-2024"
 	}, {
 		"username":	"Raziel",
-		"isbn":	"9788852084089",
+		"isbn":	"9791280639028",
+		"loan_date":	"23-08-2024",
+		"return_date":	"06-09-2024"
+	}, {
+		"username":	"Raziel",
+		"isbn":	"9788852072024",
+		"loan_date":	"23-08-2024",
+		"return_date":	"06-09-2024"
+	}, {
+		"username":	"Raziel",
+		"isbn":	"9788852072024",
+		"loan_date":	"23-08-2024",
+		"return_date":	"06-09-2024"
+	}, {
+		"username":	"Raziel",
+		"isbn":	"9788726842395",
 		"loan_date":	"23-08-2024",
 		"return_date":	"06-09-2024"
 	}]

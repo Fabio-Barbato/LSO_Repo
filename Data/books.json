@@ -11,24 +11,24 @@
 		"ISBN":	"9788726842395",
 		"author":	"Luigi Pirandello",
 		"genre":	"Classic",
-		"copies":	14,
-		"given_copies":	32,
+		"copies":	11,
+		"given_copies":	35,
 		"cover":	"https://www.lafeltrinelli.it/images/9788844034054_0_536_0_75.jpg"
 	}, {
 		"title":	"1984",
 		"ISBN":	"9791280639028",
 		"author":	"George Orwell",
 		"genre":	"Classic",
-		"copies":	4,
-		"given_copies":	1,
+		"copies":	1,
+		"given_copies":	4,
 		"cover":	"https://www.ibs.it/images/9788804668237_0_536_0_75.jpg"
 	}, {
 		"title":	"Il giocatore",
 		"ISBN":	"9788852072024",
 		"author":	"Fedor Dostoevskij",
 		"genre":	"Classic",
-		"copies":	9,
-		"given_copies":	1,
+		"copies":	7,
+		"given_copies":	3,
 		"cover":	"https://www.einaudi.it/content/uploads/2015/02/978885841820GRA.JPG"
 	}, {
 		"title":	"Altered Carbon",
@@ -51,15 +51,15 @@
 		"ISBN":	"9788893812672",
 		"author":	"Michail Bulgakov",
 		"genre":	"Classic",
-		"copies":	20,
-		"given_copies":	0,
+		"copies":	18,
+		"given_copies":	2,
 		"cover":	"https://www.ibs.it/images/9788893812672_0_536_0_75.jpg"
 	}, {
 		"title":	"Guerra e pace",
 		"ISBN":	"9788811131434",
 		"author":	"Lev Tolstoj",
 		"genre":	"Classic",
-		"copies":	30,
-		"given_copies":	0,
+		"copies":	29,
+		"given_copies":	1,
 		"cover":	"https://www.ibs.it/images/9788811131434_0_536_0_75.jpg"
 	}]
