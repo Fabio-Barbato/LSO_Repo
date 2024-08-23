@@ -21,12 +21,18 @@ time_t parse_date(const char* date_str) {
 int save_notification(const char* username, const char* isbn) {
     cJSON* notifications = read_json(NOTIF_FILE);
     if (!notifications) {
+        printf("Error reading notifications JSON file\n");
         return -1;
+    }
+
+    char* book_title = search_book_title(isbn);
+    if (book_title == NULL) {
+        book_title = "Unknown Title"; // Fallback if book title is not found
     }
 
     cJSON* notification = cJSON_CreateObject();
     char message[SIZE_BUF];
-    snprintf(message, SIZE_BUF, "Dear %s, the loan period has expired. You must return the book with ISBN %s.\n", username, isbn);
+    snprintf(message, SIZE_BUF, "Dear %s, the loan period has expired. You must return \"%s\".\n", username, book_title);
 
     cJSON_AddStringToObject(notification, "username", username);
     cJSON_AddStringToObject(notification, "isbn", isbn);
@@ -35,10 +41,15 @@ int save_notification(const char* username, const char* isbn) {
 
     cJSON_AddItemToArray(notifications, notification);
 
-    write_json(NOTIF_FILE, notifications);
-    cJSON_Delete(notifications);
+    // Write the updated JSON array to file
+    int result = write_json(NOTIF_FILE, notifications);
+    if (result != 0) {
+        printf("Error writing notifications JSON file\n");
+    }
 
-    return 0;
+    cJSON_Delete(notifications);
+    free(book_title); // Free the copied title string if it was allocated
+    return result;
 }
 
 int notify_user(const char* username, int client_socket) {
@@ -50,22 +61,33 @@ int notify_user(const char* username, int client_socket) {
 
     cJSON *notification = NULL;
     cJSON *notifications_array = json;
+    cJSON *notifications_to_send = cJSON_CreateArray();
 
+    // Accumulates user notifications
     cJSON_ArrayForEach(notification, notifications_array) {
         cJSON *user_username = cJSON_GetObjectItem(notification, "username");
         cJSON *notified = cJSON_GetObjectItem(notification, "notified");
 
         if ((strcmp(user_username->valuestring, username) == 0) && !cJSON_IsTrue(notified)) {
-            printf("Sending notification to %s...\n", username);
-            cJSON *message = cJSON_GetObjectItem(notification, "message");
-            send(client_socket, message->valuestring, strlen(message->valuestring), 0);
+            printf("Adding notification to send for %s...\n", username);
 
+            cJSON_AddItemToArray(notifications_to_send, cJSON_Duplicate(notification, 1));
+            
             cJSON_ReplaceItemInObject(notification, "notified", cJSON_CreateBool(1));
         }
     }
 
     write_json(NOTIF_FILE, json);
     cJSON_Delete(json);
+
+    // Check if there are notifications to send
+    if (cJSON_GetArraySize(notifications_to_send) > 0) {
+        char *notifications_to_send_str = cJSON_Print(notifications_to_send);
+        send(client_socket, notifications_to_send_str, strlen(notifications_to_send_str), 0);
+        free(notifications_to_send_str);
+    }
+
+    cJSON_Delete(notifications_to_send); 
     return 0;
 }
 

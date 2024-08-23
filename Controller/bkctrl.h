@@ -31,6 +31,34 @@ cJSON* search_book(const char* isbn) { //use cJSON_Print(cJSON*) to print it
     return NULL;
 }
 
+char* search_book_title(const char* isbn) {
+    cJSON *json = read_json(BK);
+    if (!json) {
+        printf("Error reading book JSON file\n");
+        return NULL;
+    }
+
+    cJSON *book = NULL;
+    cJSON *books_array = json;
+    char* title = NULL;
+
+    cJSON_ArrayForEach(book, books_array) {
+        cJSON *book_isbn = cJSON_GetObjectItem(book, "isbn");
+        cJSON *title_book = cJSON_GetObjectItem(book, "title");
+        if (cJSON_IsString(book_isbn) && (strcmp(book_isbn->valuestring, isbn) == 0)) {
+            if (cJSON_IsString(title_book)) {
+                title = strdup(title_book->valuestring); // Copy the title string
+            }
+            printf("Book found: %s\n", title);
+            cJSON_Delete(json);
+            return title;
+        }
+    }
+
+    cJSON_Delete(json);
+    return NULL;
+}
+
 char unavailable_book_title[SIZE_BUF] = {0};
 int loan(const char* isbn, const int add) { //add or loan
     cJSON *json = read_json(BK);

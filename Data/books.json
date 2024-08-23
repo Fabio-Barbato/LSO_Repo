@@ -11,8 +11,8 @@
 		"ISBN":	"9788726842395",
 		"author":	"Luigi Pirandello",
 		"genre":	"Classic",
-		"copies":	11,
-		"given_copies":	35,
+		"copies":	10,
+		"given_copies":	36,
 		"cover":	"https://www.lafeltrinelli.it/images/9788844034054_0_536_0_75.jpg"
 	}, {
 		"title":	"1984",
@@ -27,8 +27,8 @@
 		"ISBN":	"9788852072024",
 		"author":	"Fedor Dostoevskij",
 		"genre":	"Classic",
-		"copies":	7,
-		"given_copies":	3,
+		"copies":	6,
+		"given_copies":	4,
 		"cover":	"https://www.einaudi.it/content/uploads/2015/02/978885841820GRA.JPG"
 	}, {
 		"title":	"Altered Carbon",
