@@ -74,29 +74,41 @@ void loan_request(char request[], int client_socket) {
     pthread_mutex_lock(&reg_mutex);
 
     int result = count_loans(username);  // check user's loans
+    if(isbn_count<MAX_LOAN){
+        if (result < MAX_LOAN && result+isbn_count<MAX_LOAN) {  // check if loan is possible
+            result = checkout(isbn_array, isbn_count);
 
-    if (result < MAX_LOAN && result+isbn_count<MAX_LOAN) {  // check if loan is possible
-        result = checkout(isbn_array, isbn_count);
-
-        if (result == 0) {
-            for (int i = 0; i < isbn_count; i++) {
-                result = add_loan(username, isbn_array[i]);
+            if (result == 0) {
+                for (int i = 0; i < isbn_count; i++) {
+                    result = add_loan(username, isbn_array[i]);
+                }
+            } else {
+                result = -2;
             }
         } else {
-            result = -2;
+            if (result>=MAX_LOAN){
+                result = -1;
+            }else{
+                result = -3;
+            }
+            
         }
-    } else {
-        result = -1;
+    }else{
+        result = -4;
     }
 
     pthread_mutex_unlock(&reg_mutex);
 
     if (result == 0) {
-        send(client_socket, "Loan done", strlen("Loan done"), 0);
+        send(client_socket, "Loan confirmed", strlen("Loan confirmed"), 0);
     } else if (result == -1) {
         send(client_socket, "You have reached max number of loans", strlen("You have reached max number of loans"), 0);
     } else if(result == -2) {
         send(client_socket, "No copy available", strlen("No copy available"), 0);
+    } else if(result == -3) {
+        send(client_socket, "You have already borrowed books, request less", strlen("You have already borrowed books, request less"), 0);
+    } else if(result == -4) {
+        send(client_socket, "Request less books", strlen("Request less books"), 0);
     }
 }
 
@@ -124,7 +136,7 @@ void send_books(int client_socket) {
     free(json_data);
 }
 
-
+char *username;
 void command_parse(char request[], int client_socket) {
     char command[SIZE_BUF] = {0};
     sscanf(request, "%s", command);
@@ -132,17 +144,18 @@ void command_parse(char request[], int client_socket) {
     if (strcmp(command, "ADD_USER") == 0) {
         add_request(request, client_socket);
     } else if (strcmp(command, "LOGIN") == 0) {
-        char *username = login_request(request, client_socket);
-        if (username) {
-            notify_user(username, client_socket);
-            free(username); // Deallocate the memory allocated for the username
-        }
+        username = login_request(request, client_socket);
     } else if (strcmp(command, "LOAN") == 0) {
         loan_request(request, client_socket);
     } else if (strcmp(command, "GET_BOOKS") == 0) {
             send_books(client_socket);
     } else if (strcmp(command, "GET_BOOK") == 0) {
             send_book(request, client_socket);
+    } else if (strcmp(command, "CHECK_NOTIFICATIONS") == 0) {
+      if (username) {
+        notify_user(username, client_socket);
+        free(username); // Deallocate the memory allocated for the username
+        }
     } else {
         send(client_socket, "Unknown command", strlen("Unknown command"), 0);
     }

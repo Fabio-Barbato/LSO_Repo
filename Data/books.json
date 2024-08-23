@@ -11,8 +11,8 @@
 		"ISBN":	"9788726842395",
 		"author":	"Luigi Pirandello",
 		"genre":	"Classic",
-		"copies":	16,
-		"given_copies":	30,
+		"copies":	14,
+		"given_copies":	32,
 		"cover":	"https://www.lafeltrinelli.it/images/9788844034054_0_536_0_75.jpg"
 	}, {
 		"title":	"1984",
@@ -27,16 +27,16 @@
 		"ISBN":	"9788852072024",
 		"author":	"Fedor Dostoevskij",
 		"genre":	"Classic",
-		"copies":	10,
-		"given_copies":	0,
+		"copies":	9,
+		"given_copies":	1,
 		"cover":	"https://www.einaudi.it/content/uploads/2015/02/978885841820GRA.JPG"
 	}, {
 		"title":	"Altered Carbon",
 		"ISBN":	"9788850250998",
 		"author":	"Richard Morgan",
 		"genre":	"Sci-fi",
-		"copies":	17,
-		"given_copies":	0,
+		"copies":	16,
+		"given_copies":	1,
 		"cover":	"https://www.ibs.it/images/9788850246731_0_536_0_75.jpg"
 	}, {
 		"title":	"Il problema dei tre corpi",

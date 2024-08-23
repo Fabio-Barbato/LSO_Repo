@@ -12,5 +12,5 @@
 		"username":	"Raziel2",
 		"isbn":	"2",
 		"message":	"Dear Raziel2, the loan period has expired. You must return the book with ISBN 2.\n",
-		"notified":	true
+		"notified":	false
 	}]
