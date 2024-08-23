@@ -73,9 +73,9 @@ void loan_request(char request[], int client_socket) {
 
     pthread_mutex_lock(&reg_mutex);
 
-    int result = count_loans(username);  // check user's loans
-    if(isbn_count<MAX_LOAN){
-        if (result < MAX_LOAN && result+isbn_count<MAX_LOAN) {  // check if loan is possible
+    int result = count_loans(username);  // Check user's loans
+    if (isbn_count < MAX_LOAN) {
+        if (result < MAX_LOAN && result + isbn_count < MAX_LOAN) {  // Check if the loan is possible
             result = checkout(isbn_array, isbn_count);
 
             if (result == 0) {
@@ -86,14 +86,13 @@ void loan_request(char request[], int client_socket) {
                 result = -2;
             }
         } else {
-            if (result>=MAX_LOAN){
+            if (result >= MAX_LOAN) {
                 result = -1;
-            }else{
+            } else {
                 result = -3;
             }
-            
         }
-    }else{
+    } else {
         result = -4;
     }
 
@@ -103,13 +102,17 @@ void loan_request(char request[], int client_socket) {
         send(client_socket, "Loan confirmed", strlen("Loan confirmed"), 0);
     } else if (result == -1) {
         send(client_socket, "You have reached max number of loans", strlen("You have reached max number of loans"), 0);
-    } else if(result == -2) {
-        send(client_socket, "No copy available", strlen("No copy available"), 0);
-    } else if(result == -3) {
+    } else if (result == -2) {
+        char error_message[SIZE_BUF];
+        snprintf(error_message, SIZE_BUF, "No more copies available for the book: %s", unavailable_book_title);
+        send(client_socket, error_message, strlen(error_message), 0);
+    } else if (result == -3) {
         send(client_socket, "You have already borrowed books, request less", strlen("You have already borrowed books, request less"), 0);
-    } else if(result == -4) {
+    } else if (result == -4) {
         send(client_socket, "Request less books", strlen("Request less books"), 0);
     }
+
+    unavailable_book_title[0] = '\0';
 }
 
 void send_book(char request[], int client_socket){

@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include "bkctrl.h"
 #include "jsonparse.h"
+
+#define SIZE_BUF 1024
 #define BK "Data/books.json"
 
 cJSON* search_book(const char* isbn) { //use cJSON_Print(cJSON*) to print it
@@ -29,8 +31,8 @@ cJSON* search_book(const char* isbn) { //use cJSON_Print(cJSON*) to print it
     return NULL;
 }
 
-
-int loan(const char* isbn, const int add) { //0 add, else loan
+char unavailable_book_title[SIZE_BUF] = {0};
+int loan(const char* isbn, const int add) { //add or loan
     cJSON *json = read_json(BK);
     if (!json) {
         return -1;
@@ -44,29 +46,33 @@ int loan(const char* isbn, const int add) { //0 add, else loan
         if (cJSON_IsString(book_isbn) && (strcmp(book_isbn->valuestring, isbn) == 0)) {
             cJSON *copies = cJSON_GetObjectItem(book, "copies");
             cJSON *given_copies = cJSON_GetObjectItem(book, "given_copies");
+            cJSON *title = cJSON_GetObjectItem(book, "title");
             int new_copies = cJSON_GetNumberValue(copies);
             int new_givcopies = cJSON_GetNumberValue(given_copies);
 
-            if(add==0){ 
-                new_givcopies = (new_givcopies==0) ? 0:new_givcopies-1; //add or return
+            if (add == 0) { 
+                new_givcopies = (new_givcopies == 0) ? 0 : new_givcopies - 1; // Add or return
                 new_copies++;  
-            }
-            else{ //loan
-                if(new_copies==0){
-                    printf("No copies available of the book %s\n",isbn);
+            } else { // Loan
+                if (new_copies == 0) {
+                    if (title) {
+                        strncpy(unavailable_book_title, title->valuestring, SIZE_BUF);
+                    }
+                    cJSON_Delete(json);
                     return -1;
                 }
                 new_copies--;
                 new_givcopies++;
             }
-            cJSON_SetIntValue(copies,new_copies);
-            cJSON_SetIntValue(given_copies,new_givcopies);
+            cJSON_SetIntValue(copies, new_copies);
+            cJSON_SetIntValue(given_copies, new_givcopies);
             int result = write_json(BK, json);
             cJSON_Delete(json);
             return result;
         }
     }
 
+    strncpy(unavailable_book_title, "Unknown book", SIZE_BUF);
     cJSON_Delete(json);
     return -1;
 }
