@@ -85,6 +85,9 @@ int notify_user(const char* username, int client_socket) {
         char *notifications_to_send_str = cJSON_Print(notifications_to_send);
         send(client_socket, notifications_to_send_str, strlen(notifications_to_send_str), 0);
         free(notifications_to_send_str);
+    }else{
+        char* response_str = "[]"; // ritorna un JSON vuoto in caso di errore o dati non trovati
+        send(client_socket, response_str, strlen(response_str), 0);
     }
 
     cJSON_Delete(notifications_to_send); 

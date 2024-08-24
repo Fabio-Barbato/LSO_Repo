@@ -11,8 +11,8 @@
 		"ISBN":	"9788726842395",
 		"author":	"Luigi Pirandello",
 		"genre":	"Classic",
-		"copies":	10,
-		"given_copies":	36,
+		"copies":	9,
+		"given_copies":	37,
 		"cover":	"https://www.lafeltrinelli.it/images/9788844034054_0_536_0_75.jpg"
 	}, {
 		"title":	"1984",
@@ -35,8 +35,8 @@
 		"ISBN":	"9788850250998",
 		"author":	"Richard Morgan",
 		"genre":	"Sci-fi",
-		"copies":	14,
-		"given_copies":	3,
+		"copies":	13,
+		"given_copies":	4,
 		"cover":	"https://www.ibs.it/images/9788850246731_0_536_0_75.jpg"
 	}, {
 		"title":	"Il problema dei tre corpi",
