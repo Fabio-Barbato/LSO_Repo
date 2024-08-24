@@ -35,8 +35,8 @@
 		"ISBN":	"9788850250998",
 		"author":	"Richard Morgan",
 		"genre":	"Sci-fi",
-		"copies":	15,
-		"given_copies":	2,
+		"copies":	14,
+		"given_copies":	3,
 		"cover":	"https://www.ibs.it/images/9788850246731_0_536_0_75.jpg"
 	}, {
 		"title":	"Il problema dei tre corpi",
@@ -59,7 +59,7 @@
 		"ISBN":	"9788811131434",
 		"author":	"Lev Tolstoj",
 		"genre":	"Classic",
-		"copies":	29,
-		"given_copies":	1,
+		"copies":	28,
+		"given_copies":	2,
 		"cover":	"https://www.ibs.it/images/9788811131434_0_536_0_75.jpg"
 	}]

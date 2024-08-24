@@ -30,10 +30,6 @@ cJSON* search_user(const char* username) { //use cJSON_Print(cJSON*) to print it
     return NULL;
 }
 
-cJSON* get_user_profile(const char* username) {
-    return search_user(username);
-}
-
 int add_user(const char* name, const char* surname, const char* username, const char* password) {
     cJSON *json = read_json(USR);
     if (!json) {
