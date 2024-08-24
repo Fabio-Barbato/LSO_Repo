@@ -36,11 +36,21 @@
 	}, {
 		"username":	"Raziel",
 		"isbn":	"9788850250998",
-		"loan_date":	"24-08-2024",
-		"return_date":	"07-09-2024"
+		"loan_date":	"12-08-2024",
+		"return_date":	"20-08-2024"
 	}, {
 		"username":	"Raziel",
 		"isbn":	"9788726842395",
 		"loan_date":	"24-08-2024",
 		"return_date":	"07-09-2024"
+	}, {
+		"username":	"Fabio",
+		"isbn":	"9791280639028",
+		"loan_date":	"12-08-2024",
+		"return_date":	"07-09-2024"
+	}, {
+		"username":	"Raziel",
+		"isbn":	"9788852072024",
+		"loan_date":	"12-08-2024",
+		"return_date":	"20-08-2024"
 	}]

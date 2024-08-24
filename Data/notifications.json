@@ -2,5 +2,20 @@
 		"username":	"Raziel3",
 		"isbn":	"9788726842395",
 		"message":	"Dear Raziel3, the loan period has expired. You must return \"Uno, nessuno e centomila\".\n",
+		"notified":	false
+	}, {
+		"username":	"Raziel",
+		"isbn":	"9788850250998",
+		"message":	"Dear Raziel, the loan period has expired. You must return \"Altered Carbon\".\n",
+		"notified":	true
+	}, {
+		"username":	"Fabio",
+		"isbn":	"9791280639028",
+		"message":	"Dear Fabio, the loan period has expired. You must return \"1984\".\n",
+		"notified":	false
+	}, {
+		"username":	"Raziel",
+		"isbn":	"9788852072024",
+		"message":	"Dear Raziel, the loan period has expired. You must return \"Il giocatore\".\n",
 		"notified":	true
 	}]

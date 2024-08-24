@@ -58,4 +58,14 @@
 		"surname":	"surname",
 		"username":	"Raziel5",
 		"password":	"password"
+	}, {
+		"name":	"Alessia",
+		"surname":	"Barbato",
+		"username":	"Ale",
+		"password":	"password"
+	}, {
+		"name":	"Fabio",
+		"surname":	"Barbato",
+		"username":	"Fabio",
+		"password":	"password"
 	}]

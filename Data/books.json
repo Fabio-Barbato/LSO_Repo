@@ -19,16 +19,16 @@
 		"ISBN":	"9791280639028",
 		"author":	"George Orwell",
 		"genre":	"Classic",
-		"copies":	1,
-		"given_copies":	4,
+		"copies":	0,
+		"given_copies":	5,
 		"cover":	"https://www.ibs.it/images/9788804668237_0_536_0_75.jpg"
 	}, {
 		"title":	"Il giocatore",
 		"ISBN":	"9788852072024",
 		"author":	"Fedor Dostoevskij",
 		"genre":	"Classic",
-		"copies":	6,
-		"given_copies":	4,
+		"copies":	5,
+		"given_copies":	5,
 		"cover":	"https://www.einaudi.it/content/uploads/2015/02/978885841820GRA.JPG"
 	}, {
 		"title":	"Altered Carbon",
