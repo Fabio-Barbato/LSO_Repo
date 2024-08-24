@@ -34,11 +34,11 @@ int main(int argc, char const* argv[])
         perror("setsockopt SO_REUSEADDR");
         exit(EXIT_FAILURE);
     }
-
+/*
     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt))) { //reuse port enabled
         perror("setsockopt SO_REUSEPORT");
         exit(EXIT_FAILURE);
-    }
+    }*/
 
     printf("Defining address...\n");
 // DEFINE ADDRESS
