@@ -7,6 +7,7 @@
 #include "jsonparse.h"
 #define USR "Data/users.json"
 
+
 cJSON* search_user(const char* username) { //use cJSON_Print(cJSON*) to print it
     cJSON *json = read_json(USR);
     if (!json) {
@@ -27,6 +28,10 @@ cJSON* search_user(const char* username) { //use cJSON_Print(cJSON*) to print it
 
     cJSON_Delete(json);
     return NULL;
+}
+
+cJSON* get_user_profile(const char* username) {
+    return search_user(username);
 }
 
 int add_user(const char* name, const char* surname, const char* username, const char* password) {

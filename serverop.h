@@ -140,6 +140,30 @@ void send_books(int client_socket) {
     free(json_data);
 }
 
+void handle_request(const char* request, int client_socket) {
+    char command[SIZE_BUF] = {0};
+    char param1[SIZE_BUF] = {0};
+    sscanf(request, "%s %s", command, param1);
+
+    cJSON* response = NULL;
+
+    if (strcmp(command, "GET_USER") == 0) {
+        response = get_user_profile(param1);
+    } else if (strcmp(command, "GET_LOANS") == 0) {
+        response = get_user_loans(param1);
+    }
+
+    if (response) {
+        char* response_str = cJSON_Print(response);
+        send(client_socket, response_str, strlen(response_str), 0);
+        free(response_str);
+        cJSON_Delete(response);
+    } else {
+        char* response_str = "[]"; // ritorna un JSON vuoto in caso di errore o dati non trovati
+        send(client_socket, response_str, strlen(response_str), 0);
+    }
+}
+
 char *username;
 void command_parse(char request[], int client_socket) {
     char command[SIZE_BUF] = {0};
@@ -155,6 +179,8 @@ void command_parse(char request[], int client_socket) {
             send_books(client_socket);
     } else if (strcmp(command, "GET_BOOK") == 0) {
             send_book(request, client_socket);
+    }  else if (strcmp(command, "GET_USER") == 0 || strcmp(command, "GET_LOANS") == 0) {
+        handle_request(request, client_socket);
     } else if (strcmp(command, "CHECK_NOTIFICATIONS") == 0) {
       if (username) {
         notify_user(username, client_socket);

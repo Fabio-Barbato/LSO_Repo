@@ -35,8 +35,8 @@
 		"ISBN":	"9788850250998",
 		"author":	"Richard Morgan",
 		"genre":	"Sci-fi",
-		"copies":	16,
-		"given_copies":	1,
+		"copies":	15,
+		"given_copies":	2,
 		"cover":	"https://www.ibs.it/images/9788850246731_0_536_0_75.jpg"
 	}, {
 		"title":	"Il problema dei tre corpi",
@@ -51,8 +51,8 @@
 		"ISBN":	"9788893812672",
 		"author":	"Michail Bulgakov",
 		"genre":	"Classic",
-		"copies":	18,
-		"given_copies":	2,
+		"copies":	16,
+		"given_copies":	4,
 		"cover":	"https://www.ibs.it/images/9788893812672_0_536_0_75.jpg"
 	}, {
 		"title":	"Guerra e pace",

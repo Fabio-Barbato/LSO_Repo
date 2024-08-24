@@ -31,6 +31,47 @@ int count_loans(const char* username) {
     return counter;
 }
 
+cJSON* get_user_loans(const char* username) {
+    cJSON *json = read_json(LOAN);
+    if (!json) {
+        return NULL;
+    }
+
+    cJSON *loan = NULL;
+    cJSON *user_loans = cJSON_CreateArray();
+    cJSON *loans_array = json;
+    cJSON *book = NULL;
+
+    cJSON_ArrayForEach(loan, loans_array) {
+        cJSON *user_username = cJSON_GetObjectItem(loan, "username");
+        if (strcmp(user_username->valuestring, username) == 0) {
+            const char* isbn = cJSON_GetObjectItem(loan, "isbn")->valuestring;
+            book = search_book(isbn);
+            cJSON* book_title = cJSON_GetObjectItem(book,"title");
+            cJSON* book_cover = cJSON_GetObjectItem(book,"cover");
+            const char* title = book_title->valuestring;
+            const char* cover = book_cover->valuestring;
+
+            cJSON *loan_with_title = cJSON_Duplicate(loan, 1);
+            if (title) {
+                cJSON_AddStringToObject(loan_with_title, "title", title);
+            } else {
+                cJSON_AddStringToObject(loan_with_title, "title", "Unknown Title");
+            }
+
+            if (cover) {
+                cJSON_AddStringToObject(loan_with_title, "cover", cover);
+            } else {
+                cJSON_AddStringToObject(loan_with_title, "cover", "Unavailable cover");
+            }
+            cJSON_AddItemToArray(user_loans, loan_with_title);
+        }
+    }
+
+    cJSON_Delete(json);
+    return user_loans;
+}
+
 int add_loan(const char* username, const char* isbn) {
     time_t current_time;
     struct tm tm_info;
