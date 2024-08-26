@@ -71,7 +71,7 @@ void loan_request(char request[], int client_socket) {
         token = strtok(NULL, " ");
     }
 
-    pthread_mutex_lock(&reg_mutex);
+    pthread_mutex_lock(&loan_mutex);
 
     int result = count_loans(username);  // Check user's loans
     int count = result;
@@ -97,7 +97,7 @@ void loan_request(char request[], int client_socket) {
         result = -4;
     }
 
-    pthread_mutex_unlock(&reg_mutex);
+    pthread_mutex_unlock(&loan_mutex);
 
     char message[SIZE_BUF];
     if (result == 0) {
